@@ -1,0 +1,6 @@
+site_name: Openshift Operators First Look
+docs_dir: docs/
+theme: readthedocs
+repo_url: https://github.com/mvazquezc/openshift-operators-first-look
+repo_name: GitHub
+use_directory_urls: false
