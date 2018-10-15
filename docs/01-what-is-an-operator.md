@@ -2,7 +2,7 @@
 
 * An Operator is a method of packaging, deploying and managing a Kubernetes application. A Kubernetes application is an application that is both deployed on Kubernetes and managed using the Kubernetes APIs and kubectl tooling.
 
-* To be able to make the most of Kubernetes, you need a set of cohesives APIs to extend in order to service and manage your applications that run on Kubernetes. You can think of Operators as the runtime that manages this type of application on Kubernetes.
+* To be able to make the most of Kubernetes, you need a set of cohesive APIs to extend in order to service and manage your applications that run on Kubernetes. You can think of Operators as the runtime that manages this type of application on Kubernetes.
 
 * For more information you can read the [Operator FAQ](https://coreos.com/operators/) by CoreOS.
 

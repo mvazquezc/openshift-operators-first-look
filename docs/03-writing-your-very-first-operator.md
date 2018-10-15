@@ -10,10 +10,10 @@ At the moment of this writing the following versions were used:
 
 * golang-1.10.3
 * dep-0.4.1
-* oc v3.11.0+0cbc58b 
+* oc v3.11.0+0cbc58b
 
 1. Installing the Operator Framework SDK
-   
+
     ~~~sh
     $ go get github.com/operator-framework/operator-sdk
     $ cd $GOPATH/src/github.com/operator-framework/operator-sdk
@@ -26,7 +26,7 @@ At the moment of this writing the following versions were used:
 
     As previously discussed, Operators extend the K8s API, the K8s API has different groups and is versioned. Our Operator must define a new group, a new object kind and its versioning.
 
-    In the example below, we're creating the API group "mario.lab", a new object kind "PythonAPIHw" and its versioning "v1alpha1". So our operator, will take care of this combination and will act upon different events affecting the objects it is observing.
+    In the example below, we're creating the API group "`mario.lab`", a new object kind "`PythonAPIHw`" and its versioning "`v1alpha1`". So our operator, will take care of this combination and will act upon different events affecting the objects it is observing.
 
     ~~~sh
     $ mkdir -p $GOPATH/src/github.com/<user>/
@@ -83,7 +83,7 @@ At the moment of this writing the following versions were used:
 
 9. Create a Python API HelloWorld definition
 
-    If you have modified types.go and added spec properties, you must update the cr.yaml file accordingly. In our example we added the following code to the existing yaml:
+    If you have modified `types.go` and added spec properties, you must update the `cr.yaml` file accordingly. In our example, we added the following code to the existing yaml:
 
     ~~~yaml
     spec:
