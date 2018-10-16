@@ -22,8 +22,8 @@ type PythonAPIHw struct {
 }
 
 type PythonAPIHwSpec struct {
-        Size int32 `json:"size"`
+	Size int32 `json:"size"`
 }
 type PythonAPIHwStatus struct {
-        ApiPods []string `json:"apiPods"`
+	ApiPods []string `json:"apiPods"`
 }
