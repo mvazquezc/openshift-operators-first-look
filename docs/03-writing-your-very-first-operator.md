@@ -41,30 +41,57 @@ At the moment of this writing the following versions were used:
 
 3. Modify your Operator types (example [here](../sources/go/types.go))
 
-    We need to define the structure of our new object kind, in the example types.go we are defining a spec property called size which will be used to define the number of replicas of our application and an apiPods status property which will be used to specify which pods are part of our application.
+    We need to define the structure of our new object kind, in the example `types.go` we are defining a spec property called `size` which will be used to define the number of replicas of our application and an `apiPods` status property which will be used to specify which pods are part of our application.
 
     ~~~sh
+    $ cat $GOPATH/src/github.com/<operator-name>/pkg/apis/<api-group>/v1alpha1/types.go
+    ~~~
 
-    $ vim $GOPATH/src/github.com/<operator-name>/pkg/apis/<api-group>/v1alpha1/types.go
+    ~~~go
+    package v1alpha1
+
+    import (
+        metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+    )
+
+    // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+    type PythonAPIHwList struct {
+        metav1.TypeMeta `json:",inline"`
+        metav1.ListMeta `json:"metadata"`
+        Items           []PythonAPIHw `json:"items"`
+    }
+
+    // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
+    type PythonAPIHw struct {
+        metav1.TypeMeta   `json:",inline"`
+        metav1.ObjectMeta `json:"metadata"`
+        Spec              PythonAPIHwSpec   `json:"spec"`
+        Status            PythonAPIHwStatus `json:"status,omitempty"`
+    }
+
+    type PythonAPIHwSpec struct {
+        Size int32 `json:"size"`
+    }
+    type PythonAPIHwStatus struct {
+        ApiPods []string `json:"apiPods"`
+    }
 
     ~~~
 
 4. Re-generate some code after modifying the Operator types
 
-    Every time we make modifications on the operator's types, we need to run the code generator as some code must be updated accordingly.
+    Every time we make modifications on the operator's types, we must run the code generator as some code must be updated accordingly.
 
     ~~~sh
-
     $ $GOPATH/bin/operator-sdk generate k8s
-
     ~~~
 
 5. Code your Operator business logic (example [here](../sources/go/handler.go))
 
     ~~~sh
-
     $ vim $GOPATH/src/github.com/<operator-name>/pkg/stub/handler.go
-
     ~~~
 
 6. Build and Package your Operator
@@ -72,7 +99,7 @@ At the moment of this writing the following versions were used:
     ~~~sh
 
     $ $GOPATH/bin/operator-sdk build quay.io/<user>/<operator-image-name>:<operator-image-tag>
-    e.g: $GOPATH/bin/operator-sdk build quay.io/mavazque/pythonapihw:test 
+    e.g: $GOPATH/bin/operator-sdk build quay.io/mavazque/pythonapihw:test
 
     ~~~
 
