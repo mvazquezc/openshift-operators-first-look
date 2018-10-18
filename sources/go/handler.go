@@ -48,7 +48,7 @@ func (h *Handler) Handle(ctx context.Context, event sdk.Event) error {
 			return err
 		}
 		size := helloApiWorld.Spec.Size
-		logrus.Infof("Size is set to %d, current replias %d", size, *dep.Spec.Replicas)
+		logrus.Infof("Size is set to %d, current replicas %d", size, *dep.Spec.Replicas)
 		if *dep.Spec.Replicas != size {
 			logrus.Infof("Need to update replicas from %d to %d", *dep.Spec.Replicas, size)
 			dep.Spec.Replicas = &size
