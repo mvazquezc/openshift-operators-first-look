@@ -1,6 +1,6 @@
 # Controllers
 
-* In Kubernetes, a controller is a control loop that watches the shared state of the cluster through the API server and makes changes attempting to move the current state towards the desired state.
+* In Kubernetes, a controller is a control loop that watches the shared state of the cluster through the API server and makes changes attempting to move the current state towards the desired one.
 
 * Examples of controllers:
 
