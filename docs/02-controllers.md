@@ -34,7 +34,7 @@
 
 * Every controller has a Control Loop which basically does:
 
-  * Processes every single item from the Qeue
+  * Processes every single item from the Queue
   * Picks the item an do whatever it needs to do with that item
   * Pushes the item back to the queue or ignores it
   * Updates the status to reflect the new changes
