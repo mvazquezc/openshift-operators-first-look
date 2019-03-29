@@ -147,43 +147,48 @@ At the moment of this writing the following versions were used:
 
     ~~~
 
-8. Deploy your Operator
+8. Create a Namespace for deploying your operator and deploy the required RBAC
 
     ~~~sh
 
-    $ oc cluster up --enable=router,registry,web-console
-    $ oc login -u system:admin
-    $ oc new-project helloworld-operator
-    $ oc create -f /project/path/deploy/rbac.yaml
-    $ oc create -f /project/path/deploy/crd.yaml
-    $ oc create -f /project/path/deploy/operator.yaml
-
+    $ oc create ns helloworld-operator
+    $ oc -n helloworld-operator create -f /path/to/operator/project/deploy/role.yaml
+    $ oc -n helloworld-operator create -f /path/to/operator/project/deploy/role_binding.yaml
+    $ oc -n helloworld-operator create -f /path/to/operator/project/deploy/service_account.yaml
+    
     ~~~
 
-9. Create a Python API HelloWorld definition
+9. Load the CustomResourceDefinition for your new type
 
-    If you have modified `types.go` and added spec properties, you must update the `cr.yaml` file accordingly. In our example, we added the following code to the existing yaml:
-
-    ~~~yaml
-
-    spec:
-      size: 5
-
-    ~~~
+   ~~~sh
+   $ oc create -f /path/to/operator/project/deploy/crds/mario_v1alpha1_pythonapihw_crd.yaml   
+   ~~~
+   
+10. Configure the operator deployment to use your operator's image and deploy it
 
     ~~~sh
 
-    $ oc create -f /project/path/deploy/cr.yaml
+    $ sed -i "s/REPLACE_IMAGE/<your_image>/g" /path/to/operator/project/deploy/operator.yaml
+    eg: sed -i "s/REPLACE_IMAGE/quay.io\/mavazque\/pythonapihw:test/g" /path/to/operator/project/deploy/operator.yaml
+    $ oc -n helloworld-operator create -f /path/to/operator/project/deploy/operator.yaml
+    
+    ~~~
+
+11. Create a Python API HelloWorld definition
+
+    ~~~sh
+    
+    $ oc -n helloworld-operator create -f /path/to/operator/project/deploy/cr.yaml
 
     ~~~
 
-10. Verify the deployment
+12. Verify the deployment
 
     ~~~sh
 
     $ oc get pods
     $ oc get svc
-    $ oc get <your-crd-object-kind> -o yaml
+    $ oc get <your-cr-object> -o yaml
     $ curl <svc-ip>:<svc-port>
 
     ~~~
