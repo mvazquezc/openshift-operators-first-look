@@ -192,5 +192,12 @@ At the moment of this writing the following versions were used:
     $ curl <svc-ip>:<svc-port>
 
     ~~~
+    
+13. Cleanup
+
+    ~~~sh
+    $ oc delete ns helloworld-operator
+    $ oc delete -f /path/to/operator/project/deploy/crds/mario_v1alpha1_pythonapihw_crd.yaml
+    ~~~
 
 **Back to [Controllers](02-controllers.md)**
