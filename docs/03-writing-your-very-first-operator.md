@@ -18,7 +18,7 @@ At the moment of this writing the following versions were used:
 
     $ go get github.com/operator-framework/operator-sdk
     $ cd $GOPATH/src/github.com/operator-framework/operator-sdk
-    $ git checkout tags/v0.0.6
+    $ git checkout tags/v0.6.6
     $ make dep
     $ make install
 
@@ -34,17 +34,26 @@ At the moment of this writing the following versions were used:
 
     $ mkdir -p $GOPATH/src/github.com/<user>/
     $ cd $_
-    $ $GOPATH/bin/operator-sdk new <operator-name> --api-version=<your-crd-api-group>/v1alpha1 --kind=<your-crd-object-kind>
-    e.g: $GOPATH/bin/operator-sdk new python-api-hw --api-version=mario.lab/v1alpha1 --kind=PythonAPIHw
+    $ $GOPATH/bin/operator-sdk new <operator-name>
+    $ cd <operator-name>
+    e.g: $GOPATH/bin/operator-sdk new python-api-hw
 
     ~~~
 
 3. Modify your Operator types (example [here](../sources/go/types.go))
 
-    We need to define the structure of our new object kind, in the example `types.go` we are defining a spec property called `size` which will be used to define the number of replicas of our application and an `apiPods` status property which will be used to specify which pods are part of our application.
+    First we need to define our API endpoint and its version and kind.
+    
+    ~~~sh
+    $ $GOPATH/bin/operator-sdk add api --api-version=<your-crd-api-group>/v1alpha1 --kind=<your-crd-object-kind>
+    e.g: $GOPATH/bin/operator-sdk add api --api-version=mario.lab/v1alpha1 --kind=PythonAPIHw
+
+    ~~~
+    
+    Then we need to define the structure of our new object kind, in the example `types.go` we are defining a spec property called `size` which will be used to define the number of replicas of our application and an `apiPods` status property which will be used to specify which pods are part of our application.
 
     ~~~sh
-    $ cat $GOPATH/src/github.com/<operator-name>/pkg/apis/<api-group>/v1alpha1/types.go
+    $ cat $GOPATH/src/github.com/<operator-name>/pkg/apis/<api-group>/v1alpha1/<your-crd-object-kind>_types.go
     ~~~
 
     ~~~go
@@ -88,10 +97,14 @@ At the moment of this writing the following versions were used:
     $ $GOPATH/bin/operator-sdk generate k8s
     ~~~
 
-5. Code your Operator business logic (example [here](../sources/go/handler.go))
+5. Create and code your operator business logic (example [here](../sources/go/handler.go))
 
     ~~~sh
-    $ vim $GOPATH/src/github.com/<operator-name>/pkg/stub/handler.go
+    $ $GOPATH/bin/operator-sdk add controller --api-version=<your-crd-api-group>/v1alpha1 --kind=<your-crd-object-kind>
+    e.g: $GOPATH/bin/operator-sdk add controller --api-version=mario.lab/v1alpha1 --kind=PythonAPIHw
+    $ vim $GOPATH/src/github.com/<operator-name>/pkg/controller/<your-crd-object-kind>/<your-crd-object-kind>_controller.go
+    vim $GOPATH/src/github.com/<operator-name>/pkg/controller/pythonapihw/pythonapihw_controller.go
+    
     ~~~
 
 6. Build and Package your Operator
