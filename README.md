@@ -1,3 +1,6 @@
+# Moved to a Blog post: https://linuxera.org/writing-operators-using-operator-framework/
+
+
 # First look at OpenShift/K8s Operators
 
 In this repo we plan to cover the purpose and usage of K8s (Kubernetes) and OpenShift operators and how them can be implemented to automate lifecycle management of applications.
